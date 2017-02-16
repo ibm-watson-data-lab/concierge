@@ -1,0 +1,523 @@
+{
+  "name": "businesscard",
+  "intents": [
+    {
+      "intent": "booking",
+      "examples": [
+        {
+          "text": "book a table"
+        },
+        {
+          "text": "booking service"
+        },
+        {
+          "text": "I want book a room"
+        },
+        {
+          "text": "I want to make a booking"
+        },
+        {
+          "text": "make an appointment"
+        },
+        {
+          "text": "make a reservation"
+        },
+        {
+          "text": "reserve a room"
+        },
+        {
+          "text": "reserve me a table"
+        }
+      ],
+      "description": null
+    },
+    {
+      "intent": "contact",
+      "examples": [
+        {
+          "text": "can I phone you?"
+        },
+        {
+          "text": "how can I change my booking"
+        },
+        {
+          "text": "how do get in touch"
+        },
+        {
+          "text": "I need to speak to someone"
+        },
+        {
+          "text": "I would like to make a complaint"
+        },
+        {
+          "text": "what are your contact details"
+        },
+        {
+          "text": "what's your email address?"
+        }
+      ],
+      "description": null
+    },
+    {
+      "intent": "hello",
+      "examples": [
+        {
+          "text": "good afternoon"
+        },
+        {
+          "text": "good evening"
+        },
+        {
+          "text": "good morning"
+        },
+        {
+          "text": "hello"
+        },
+        {
+          "text": "hi"
+        },
+        {
+          "text": "yo"
+        }
+      ],
+      "description": null
+    },
+    {
+      "intent": "visit",
+      "examples": [
+        {
+          "text": "How do I get to your shop"
+        },
+        {
+          "text": "I need directions to get to you"
+        },
+        {
+          "text": "I want to visit your store"
+        },
+        {
+          "text": "what's your address"
+        },
+        {
+          "text": "where are you located"
+        },
+        {
+          "text": "Where can I find a map of your location"
+        }
+      ],
+      "description": null
+    }
+  ],
+  "entities": [
+    {
+      "type": null,
+      "entity": "contacttype",
+      "source": null,
+      "values": [
+        {
+          "value": "email",
+          "metadata": null,
+          "synonyms": [
+            "electronic mail",
+            "email",
+            "e-mail",
+            "email address",
+            "gmail",
+            "hotmail"
+          ]
+        },
+        {
+          "value": "phone",
+          "metadata": null,
+          "synonyms": [
+            "cell",
+            "cell number",
+            "mob",
+            "mobile",
+            "mobile number",
+            "phone number",
+            "tel",
+            "telephone",
+            "telephone number"
+          ]
+        },
+        {
+          "value": "website",
+          "metadata": null,
+          "synonyms": [
+            "url",
+            "web address",
+            "web site"
+          ]
+        }
+      ],
+      "open_list": false,
+      "description": null
+    },
+    {
+      "type": null,
+      "entity": "location",
+      "source": null,
+      "values": [
+        {
+          "value": "address",
+          "metadata": null,
+          "synonyms": [
+            "city",
+            "postal address",
+            "road",
+            "street",
+            "street address",
+            "town"
+          ]
+        },
+        {
+          "value": "directions",
+          "metadata": null,
+          "synonyms": [
+            "instructions",
+            "route",
+            "route planner",
+            "turn-by-turn"
+          ]
+        },
+        {
+          "value": "map",
+          "metadata": null,
+          "synonyms": [
+            "map"
+          ]
+        },
+        {
+          "value": "postcode",
+          "metadata": null,
+          "synonyms": [
+            "post code",
+            "zip",
+            "zipcode"
+          ]
+        },
+        {
+          "value": "satnav",
+          "metadata": null,
+          "synonyms": [
+            "garmin",
+            "satellite navigation",
+            "sat nav",
+            "sat-nav",
+            "tomtom"
+          ]
+        }
+      ],
+      "open_list": false,
+      "description": null
+    },
+    {
+      "type": null,
+      "entity": "sys-date",
+      "source": "system.entities",
+      "values": [],
+      "open_list": false,
+      "description": null
+    },
+    {
+      "type": null,
+      "entity": "sys-time",
+      "source": "system.entities",
+      "values": [],
+      "open_list": false,
+      "description": null
+    }
+  ],
+  "language": "en",
+  "metadata": null,
+  "description": null,
+  "dialog_nodes": [
+    {
+      "go_to": null,
+      "output": null,
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": null,
+      "description": null,
+      "dialog_node": "node_11_1487240699639",
+      "previous_sibling": "Visit unknown"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "At what time on @sys-date would you like to come?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#booking && @sys-date",
+      "description": null,
+      "dialog_node": "Booking confirm time",
+      "previous_sibling": "node_11_1487240699639"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Do you want our email, telephone or website?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact",
+      "description": null,
+      "dialog_node": "Unknown contact type",
+      "previous_sibling": "Contact Phone"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Great! I'll book you in for @sys-time on [sys-date]. Thanks :)"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Booking confirm time",
+      "context": null,
+      "metadata": null,
+      "conditions": "@sys-time",
+      "description": null,
+      "dialog_node": "Booking and time",
+      "previous_sibling": null
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Hello! Welcome to Bird's Bog Rolls. How can I help you today."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#hello",
+      "description": null,
+      "dialog_node": "Welcome",
+      "previous_sibling": "Unknown contact type"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our address is 14 Front Street, Manchester. TS5 5HJ"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#visit && @location:address",
+      "description": null,
+      "dialog_node": "Visit Address",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our email address is glynn.bird\\@gmail.com"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:email",
+      "description": null,
+      "dialog_node": "Contact Email",
+      "previous_sibling": null
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our phone number is 01642 881088"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:phone",
+      "description": null,
+      "dialog_node": "Contact Phone",
+      "previous_sibling": "Contact website"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our website is http://glynnbird.com"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:website",
+      "description": null,
+      "dialog_node": "Contact website",
+      "previous_sibling": "Contact Email"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Please call 01642 881088"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Unknown contact type",
+      "context": null,
+      "metadata": null,
+      "conditions": "@contacttype:phone",
+      "description": null,
+      "dialog_node": "Unknown - Phone",
+      "previous_sibling": "Unknown - email"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Please glynn.bird\\@gmail.com"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Unknown contact type",
+      "context": null,
+      "metadata": null,
+      "conditions": "@contacttype:email",
+      "description": null,
+      "dialog_node": "Unknown - email",
+      "previous_sibling": null
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Please www.google.com"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Unknown contact type",
+      "context": null,
+      "metadata": null,
+      "conditions": "@contacttype:website",
+      "description": null,
+      "dialog_node": "Unknown - web",
+      "previous_sibling": "Unknown - Phone"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Would you like our address, or to see a map?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#visit",
+      "description": null,
+      "dialog_node": "Visit unknown",
+      "previous_sibling": "Visit directions"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "You can find directions to our location here: https://www.google.co.uk/maps/dir//TS5+5HJ",
+            "Find directions here: https://www.google.co.uk/maps/dir//TS5+5HJ"
+          ],
+          "selection_policy": "random"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#visit && @location:directions || @location:map || @location:satnav",
+      "description": null,
+      "dialog_node": "Visit directions",
+      "previous_sibling": "Visit Address"
+    },
+    {
+      "go_to": {
+        "return": null,
+        "selector": "body",
+        "dialog_node": "Visit Address"
+      },
+      "output": {
+        "text": {
+          "values": [],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Visit unknown",
+      "context": null,
+      "metadata": null,
+      "conditions": "@location:address",
+      "description": null,
+      "dialog_node": "Unknown Address",
+      "previous_sibling": "Unknown map"
+    },
+    {
+      "go_to": {
+        "return": null,
+        "selector": "body",
+        "dialog_node": "Visit directions"
+      },
+      "output": {
+        "text": {
+          "values": [],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Visit unknown",
+      "context": null,
+      "metadata": null,
+      "conditions": "@location:map",
+      "description": null,
+      "dialog_node": "Unknown map",
+      "previous_sibling": null
+    }
+  ],
+  "counterexamples": []
+}

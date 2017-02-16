@@ -1,0 +1,22 @@
+{
+  "name": "concierge",
+  "version": "1.0.0",
+  "description": "A Watson powered conversational bot for small businesses",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ibm-cds-labs/concierge.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ibm-cds-labs/concierge/issues"
+  },
+  "homepage": "https://github.com/ibm-cds-labs/concierge#readme",
+  "dependencies": {
+    "request-promise": "^4.1.1"
+  }
+}
