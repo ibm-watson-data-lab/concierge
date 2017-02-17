@@ -11,8 +11,8 @@ var main = function(msg) {
     throw new Error('Required parameter CONVERSATION_PASSWORD missing');
   }
 
-  if (!msg.CONVERSATION_WORKSPACE) {
-    throw new Error('Required parameter CONVERSATION_WORKSPACE missing');
+  if (!msg.workspace) {
+    throw new Error('Required parameter "workspace" missing');
   }
 
   if (!msg.text) {
@@ -31,7 +31,7 @@ var main = function(msg) {
     };
     var req = {
       method: 'post',
-      url: 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' + msg.CONVERSATION_WORKSPACE + '/message?version=2016-09-20',
+      url: 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' + msg.workspace + '/message?version=2016-09-20',
       json: true,
       body: body,
       auth: {
