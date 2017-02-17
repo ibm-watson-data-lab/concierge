@@ -102,13 +102,25 @@ function Concierge(url) {
 				$.ajax({
 				  type: "POST",
 				  url: this.url,
-				  data: data,
-				  dataType: "json"
+				  data: JSON.stringify(data),
+				  dataType: "json",
+				  contentType: "application/json; charset=utf-8"
 				})
 				.done(function(res) {
-					console.log(res)
-				})
-				
+					
+					if (res.context) {
+						this.context = res.context
+					}
+
+					res.output.text.forEach(function(t) {
+						this.renderChatMessage({
+							name: "Concierge",
+							msg: t
+						})
+					}.bind(this))
+
+				}.bind(this))
+
 				$("#_concierge_chat_msg").val("");
 				return;
 			}
@@ -132,8 +144,10 @@ function Concierge(url) {
 
 		}
 
+		// render chat window
 		this.renderChatWindow();
 
+		// initiate the conversation
 		this.sendMessage("Hello")
 
 	}
