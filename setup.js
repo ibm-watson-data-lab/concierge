@@ -90,7 +90,8 @@ const createWorkspace = function() {
 
       Object.keys(data).forEach(function(k) {
 
-        t.dialog_nodes[ni].output.text.values[i] = t.dialog_nodes[ni].output.text.values[i].replace('{{' + k + '}}', data[k]);
+        var exp = new RegExp('{{' + k + '}}', 'g')
+        t.dialog_nodes[ni].output.text.values[i] = t.dialog_nodes[ni].output.text.values[i].replace(exp, data[k]);
 
       })
 
