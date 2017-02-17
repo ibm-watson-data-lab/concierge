@@ -1,6 +1,5 @@
 <html>
   <head>
-    <link rel="stylesheet" href="http://localhost:8000/widget/chat-widget.css">
   </head>
   <body>
     TEST
@@ -8,6 +7,9 @@
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
   <script src="http://localhost:8000/widget/chat-widget.js"></script>
   <script>
-    var Concierge = new Concierge("https://846b1a9f-8a9c-446d-8e88-296cda4f8352-gws.api-gw.mybluemix.net/concierge/message");
+    var Concierge = new Concierge({
+      url: "https://846b1a9f-8a9c-446d-8e88-296cda4f8352-gws.api-gw.mybluemix.net/concierge/message",
+      workspace_id: "9224810d-80ab-4112-9ca3-39945373d172"
+    });
   </script>
 </html>
