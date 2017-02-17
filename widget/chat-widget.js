@@ -3,9 +3,10 @@
   FOR SIMPLE NOTIFICATION SERVICE
 ******/
 var _concierge_chat_host = document.currentScript.src.replace(/\/chat-widget.js$/, '');
-function Concierge(url) { 
+function Concierge(opts) { 
 
-  this.url = url || ""
+  this.url = opts.url || "";
+  this.workspace_id = opts.workspace_id || null;
   this.context = null;
 
   // dependencies
@@ -122,7 +123,8 @@ function Concierge(url) {
           })
 
           var data = {
-            text: msg
+            text: msg,
+            workspace: this.workspace_id
           }
           if (this.context) {
             data.context = this.context;
