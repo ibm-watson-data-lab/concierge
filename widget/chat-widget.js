@@ -161,7 +161,7 @@ function Concierge(url) {
         var list = $('#_concierge_chat_message_list')
 
         var name = $("<p>", { class: "_concierge_chat_msg_header" }).text(m.name)
-        var msg = $("<p>").text(m.msg)
+        var msg = $("<p>").html(m.msg)
 
         var li = $("<li>")
         li.append(name);
@@ -182,7 +182,5 @@ function Concierge(url) {
     }
 
   }.bind(this));
-
-    
 
 }
