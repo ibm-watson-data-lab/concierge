@@ -2,36 +2,6 @@
   "name": "businesscard",
   "intents": [
     {
-      "intent": "booking",
-      "examples": [
-        {
-          "text": "book a table"
-        },
-        {
-          "text": "booking service"
-        },
-        {
-          "text": "I want book a room"
-        },
-        {
-          "text": "I want to make a booking"
-        },
-        {
-          "text": "make an appointment"
-        },
-        {
-          "text": "make a reservation"
-        },
-        {
-          "text": "reserve a room"
-        },
-        {
-          "text": "reserve me a table"
-        }
-      ],
-      "description": null
-    },
-    {
       "intent": "contact",
       "examples": [
         {
@@ -302,7 +272,7 @@
       "output": {
         "text": {
           "values": [
-            "Hello! Welcome to Bird's Bog Rolls. How can I help you today."
+            "Hello! Welcome to {{name}}. How can I help you today."
           ],
           "selection_policy": "sequential"
         }
@@ -320,7 +290,7 @@
       "output": {
         "text": {
           "values": [
-            "Our address is 14 Front Street, Manchester. TS5 5HJ"
+            "Our address is {{address}}"
           ],
           "selection_policy": "sequential"
         }
@@ -338,7 +308,7 @@
       "output": {
         "text": {
           "values": [
-            "Our email address is glynn.bird\\@gmail.com"
+            "Our email address is {{email}}"
           ],
           "selection_policy": "sequential"
         }
@@ -356,7 +326,7 @@
       "output": {
         "text": {
           "values": [
-            "Our phone number is 01642 881088"
+            "Our phone number is {{phone}}"
           ],
           "selection_policy": "sequential"
         }
@@ -374,7 +344,7 @@
       "output": {
         "text": {
           "values": [
-            "Our website is http://glynnbird.com"
+            "Our website is {{website}}"
           ],
           "selection_policy": "sequential"
         }
@@ -392,7 +362,7 @@
       "output": {
         "text": {
           "values": [
-            "Please call 01642 881088"
+            "Please call {{phone}}"
           ],
           "selection_policy": "sequential"
         }
@@ -410,7 +380,7 @@
       "output": {
         "text": {
           "values": [
-            "Please glynn.bird\\@gmail.com"
+            "Please email us at {{email}}"
           ],
           "selection_policy": "sequential"
         }
@@ -428,7 +398,7 @@
       "output": {
         "text": {
           "values": [
-            "Please www.google.com"
+            "Please visit {{website}}"
           ],
           "selection_policy": "sequential"
         }
@@ -464,8 +434,8 @@
       "output": {
         "text": {
           "values": [
-            "You can find directions to our location here: https://www.google.co.uk/maps/dir//TS5+5HJ",
-            "Find directions here: https://www.google.co.uk/maps/dir//TS5+5HJ"
+            "You can find directions to our location here: https://www.google.co.uk/maps/dir//{{postcode}}",
+            "Find directions here: https://www.google.co.uk/maps/dir//{{postcode}}"
           ],
           "selection_policy": "random"
         }
