@@ -308,7 +308,7 @@
       "output": {
         "text": {
           "values": [
-            "Our email address is <a href='mailto:{{email}}'>{{email}}</a>"
+            "Our email address is <a target='_blank' href='mailto:{{email}}'>{{email}}</a>"
           ],
           "selection_policy": "sequential"
         }
@@ -326,7 +326,7 @@
       "output": {
         "text": {
           "values": [
-            "Our phone number is <a href='tel:{{phone}}'>{{phone}}</a>"
+            "Our phone number is <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>"
           ],
           "selection_policy": "sequential"
         }
@@ -344,7 +344,7 @@
       "output": {
         "text": {
           "values": [
-            "Our website is {{website}}"
+            "Our website is <a target='_blank' href='{{website}}'>{{website}}</a>"
           ],
           "selection_policy": "sequential"
         }
@@ -362,7 +362,7 @@
       "output": {
         "text": {
           "values": [
-            "Please call <a href='tel:{{phone}}'>{{phone}}</a>"
+            "Please call <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>"
           ],
           "selection_policy": "sequential"
         }
@@ -380,7 +380,7 @@
       "output": {
         "text": {
           "values": [
-            "Please email us at <a href='mailto:{{email}}'>{{email}}</a>"
+            "Please email us at <a target='_blank' href='mailto:{{email}}'>{{email}}</a>"
           ],
           "selection_policy": "sequential"
         }
@@ -398,7 +398,7 @@
       "output": {
         "text": {
           "values": [
-            "Please visit {{website}}"
+            "Please visit <a target='_blank' href='{{website}}'>{{website}}</a>"
           ],
           "selection_policy": "sequential"
         }
@@ -434,8 +434,8 @@
       "output": {
         "text": {
           "values": [
-            "You can find directions to our location <a href='https://www.google.co.uk/maps/dir//{{postcode}}'>here</a>",
-            "Find directions <a href='https://www.google.co.uk/maps/dir//{{postcode}}'>here</a>"
+            "You can find directions to our location <a target='_blank' href='https://www.google.co.uk/maps/dir//{{postcode}}'>here</a>",
+            "Find directions <a target='_blank' href='https://www.google.co.uk/maps/dir//{{postcode}}'>here</a>"
           ],
           "selection_policy": "random"
         }
