@@ -2,13 +2,43 @@
   "name": "businesscard",
   "intents": [
     {
+      "intent": "booking",
+      "examples": [
+        {
+          "text": "book a table"
+        },
+        {
+          "text": "booking service"
+        },
+        {
+          "text": "I want book a room"
+        },
+        {
+          "text": "I want to make a booking"
+        },
+        {
+          "text": "make an appointment"
+        },
+        {
+          "text": "make a reservation"
+        },
+        {
+          "text": "reserve a room"
+        },
+        {
+          "text": "reserve me a table"
+        }
+      ],
+      "description": null
+    },
+    {
       "intent": "contact",
       "examples": [
         {
           "text": "can I phone you?"
         },
         {
-          "text": "how can I change my booking"
+          "text": "how can I make a complaint"
         },
         {
           "text": "how do get in touch"
@@ -48,6 +78,60 @@
         },
         {
           "text": "yo"
+        }
+      ],
+      "description": null
+    },
+    {
+      "intent": "opening",
+      "examples": [
+        {
+          "text": "are you closed"
+        },
+        {
+          "text": "are you open now"
+        },
+        {
+          "text": "do you open at weekends"
+        },
+        {
+          "text": "what time do you close"
+        },
+        {
+          "text": "when are you open"
+        },
+        {
+          "text": "when are you open until"
+        }
+      ],
+      "description": null
+    },
+    {
+      "intent": "thanks",
+      "examples": [
+        {
+          "text": "amazing"
+        },
+        {
+          "text": "brilliant"
+        },
+        {
+          "text": "great"
+        },
+        {
+          "text": "perfect"
+        },
+        {
+          "text": "thanks"
+        },
+        {
+          "text": "thanks for your help"
+        },
+        {
+          "text": "thank you"
+        },
+        {
+          "text": "you're a star"
         }
       ],
       "description": null
@@ -96,6 +180,16 @@
           ]
         },
         {
+          "value": "facebook",
+          "metadata": null,
+          "synonyms": [
+            "facebook",
+            "face book",
+            "fb",
+            "message"
+          ]
+        },
+        {
           "value": "phone",
           "metadata": null,
           "synonyms": [
@@ -108,6 +202,15 @@
             "tel",
             "telephone",
             "telephone number"
+          ]
+        },
+        {
+          "value": "twitter",
+          "metadata": null,
+          "synonyms": [
+            "dm",
+            "tweet",
+            "twitter"
           ]
         },
         {
@@ -191,6 +294,14 @@
     },
     {
       "type": null,
+      "entity": "sys-number",
+      "source": "system.entities",
+      "values": [],
+      "open_list": false,
+      "description": null
+    },
+    {
+      "type": null,
       "entity": "sys-time",
       "source": "system.entities",
       "values": [],
@@ -204,14 +315,14 @@
   "dialog_nodes": [
     {
       "go_to": null,
-      "output": null,
+      "output": {},
       "parent": null,
       "context": null,
       "metadata": null,
-      "conditions": null,
+      "conditions": "#hello",
       "description": null,
-      "dialog_node": "node_11_1487240699639",
-      "previous_sibling": "Visit unknown"
+      "dialog_node": "Welcome",
+      "previous_sibling": "Unknown contact type"
     },
     {
       "go_to": null,
@@ -229,7 +340,7 @@
       "conditions": "#booking && @sys-date",
       "description": null,
       "dialog_node": "Booking confirm time",
-      "previous_sibling": "node_11_1487240699639"
+      "previous_sibling": "Opening"
     },
     {
       "go_to": null,
@@ -247,14 +358,14 @@
       "conditions": "#contact",
       "description": null,
       "dialog_node": "Unknown contact type",
-      "previous_sibling": "Contact Phone"
+      "previous_sibling": "Contact Facebook"
     },
     {
       "go_to": null,
       "output": {
         "text": {
           "values": [
-            "Great! I'll book you in for @sys-time on [sys-date]. Thanks :)"
+            "Great! I'll book you in for @sys-time! Please can you give me your phone number to confirm the booking?"
           ],
           "selection_policy": "sequential"
         }
@@ -272,7 +383,7 @@
       "output": {
         "text": {
           "values": [
-            "Hello! Welcome to {{name}}. How can I help you today."
+            "Our opening hours are {{opening}}"
           ],
           "selection_policy": "sequential"
         }
@@ -280,17 +391,18 @@
       "parent": null,
       "context": null,
       "metadata": null,
-      "conditions": "#hello",
+      "conditions": "#opening",
       "description": null,
-      "dialog_node": "Welcome",
-      "previous_sibling": "Unknown contact type"
+      "dialog_node": "Opening",
+      "previous_sibling": "Visit unknown"
     },
     {
       "go_to": null,
       "output": {
         "text": {
           "values": [
-            "Our address is {{address}}"
+            "Our address is {{address}}",
+            "Our postal address is {{address}}"
           ],
           "selection_policy": "sequential"
         }
@@ -308,115 +420,8 @@
       "output": {
         "text": {
           "values": [
-            "Our email address is <a target='_blank' href='mailto:{{email}}'>{{email}}</a>"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": null,
-      "context": null,
-      "metadata": null,
-      "conditions": "#contact && @contacttype:email",
-      "description": null,
-      "dialog_node": "Contact Email",
-      "previous_sibling": null
-    },
-    {
-      "go_to": null,
-      "output": {
-        "text": {
-          "values": [
-            "Our phone number is <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": null,
-      "context": null,
-      "metadata": null,
-      "conditions": "#contact && @contacttype:phone",
-      "description": null,
-      "dialog_node": "Contact Phone",
-      "previous_sibling": "Contact website"
-    },
-    {
-      "go_to": null,
-      "output": {
-        "text": {
-          "values": [
-            "Our website is <a target='_blank' href='{{website}}'>{{website}}</a>"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": null,
-      "context": null,
-      "metadata": null,
-      "conditions": "#contact && @contacttype:website",
-      "description": null,
-      "dialog_node": "Contact website",
-      "previous_sibling": "Contact Email"
-    },
-    {
-      "go_to": null,
-      "output": {
-        "text": {
-          "values": [
-            "Please call <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "Unknown contact type",
-      "context": null,
-      "metadata": null,
-      "conditions": "@contacttype:phone",
-      "description": null,
-      "dialog_node": "Unknown - Phone",
-      "previous_sibling": "Unknown - email"
-    },
-    {
-      "go_to": null,
-      "output": {
-        "text": {
-          "values": [
-            "Please email us at <a target='_blank' href='mailto:{{email}}'>{{email}}</a>"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "Unknown contact type",
-      "context": null,
-      "metadata": null,
-      "conditions": "@contacttype:email",
-      "description": null,
-      "dialog_node": "Unknown - email",
-      "previous_sibling": null
-    },
-    {
-      "go_to": null,
-      "output": {
-        "text": {
-          "values": [
-            "Please visit <a target='_blank' href='{{website}}'>{{website}}</a>"
-          ],
-          "selection_policy": "sequential"
-        }
-      },
-      "parent": "Unknown contact type",
-      "context": null,
-      "metadata": null,
-      "conditions": "@contacttype:website",
-      "description": null,
-      "dialog_node": "Unknown - web",
-      "previous_sibling": "Unknown - Phone"
-    },
-    {
-      "go_to": null,
-      "output": {
-        "text": {
-          "values": [
-            "Would you like our address, or to see a map?"
+            "Would you like our address, postcode for your sat-nav or to see a map?",
+            "Great. We'd love to see you in person. Would you like our postal address, just the postcode for your sat nav or a map?"
           ],
           "selection_policy": "sequential"
         }
@@ -434,8 +439,8 @@
       "output": {
         "text": {
           "values": [
-            "You can find directions to our location <a target='_blank' href='https://www.google.co.uk/maps/dir//{{postcode}}'>here</a>",
-            "Find directions <a target='_blank' href='https://www.google.co.uk/maps/dir//{{postcode}}'>here</a>"
+            "You can find directions to our location here: https://www.google.co.uk/maps/dir//{{postcode}} or put {{postcode}} into your Sat Nav",
+            "We're at {{postcode}}  https://www.google.co.uk/maps/dir//{{postcode}}"
           ],
           "selection_policy": "random"
         }
@@ -447,6 +452,245 @@
       "description": null,
       "dialog_node": "Visit directions",
       "previous_sibling": "Visit Address"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Great! We'll message you on @sys-number when the booking is confirmed.",
+            "Thanks! You should get a message on @sys-number when the booking is complete.",
+            "That's fantastic! When the booking is confirmed, we'll contact you on @sys-number to let you know."
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Booking and time",
+      "context": null,
+      "metadata": null,
+      "conditions": "@sys-number",
+      "description": null,
+      "dialog_node": "Booking complete",
+      "previous_sibling": null
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our email address is <a target='_blank' href='mailto:{{email}}'>{{email}}</a>",
+            "You can email us at <a target='_blank' href='mailto:{{email}}'>{{email}}</a>",
+            "You can email your enquiry to <a target='_blank' href='mailto:{{email}}'>{{email}}</a>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:email",
+      "description": null,
+      "dialog_node": "Contact Email",
+      "previous_sibling": null
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our Facebook page is <a target='_blank' href='{{facebook}}'>{{facebook}}</a>",
+            "Join our Facebook community at <a target='_blank' href='{{facebook}}'>{{facebook}}</a>",
+            "You can find us at <a target='_blank' href='{{facebook}}'>{{facebook}}</a>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:facebook",
+      "description": null,
+      "dialog_node": "Contact Facebook",
+      "previous_sibling": "Contact Twitter"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our phone number is <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>",
+            "You can call <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>",
+            "Please dial <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:phone",
+      "description": null,
+      "dialog_node": "Contact Phone",
+      "previous_sibling": "Contact website"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Our website is <a target='_blank' href='{{website}}'>{{website}}",
+            "Visit <a target='_blank' href='{{website}}'>{{website}}",
+            "Click <a target='_blank' href='{{website}}'>{{website}}"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:website",
+      "description": null,
+      "dialog_node": "Contact website",
+      "previous_sibling": "Contact Email"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "You can find our Twitter feed at <a target='_blank' href='https://twitter.com/{{twitter}}'>\\@{{twitter}}</a>",
+            "Our Tweets are at <a target='_blank' href='https://twitter.com/{{twitter}}'>\\@{{twitter}}</a>",
+            "Follow us on Twitter at <a target='_blank' href='https://twitter.com/{{twitter}}'>\\@{{twitter}}</a>"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#contact && @contacttype:twitter",
+      "description": null,
+      "dialog_node": "Contact Twitter",
+      "previous_sibling": "Contact Phone"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Ok. Tell me what date you want to make a booking.",
+            "No problem. What day suits you?",
+            "On what day?",
+            "What date is best for you?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#booking",
+      "description": null,
+      "dialog_node": "Booking unknown time",
+      "previous_sibling": "Booking confirm time"
+    },
+    {
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "No problem!",
+            "It's a pleasure",
+            "Not a problem",
+            "You're welcome",
+            "You're very welcome",
+            "My pleasure"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": null,
+      "context": null,
+      "metadata": null,
+      "conditions": "#thanks",
+      "description": null,
+      "dialog_node": "Thanks",
+      "previous_sibling": "Booking unknown time"
+    },
+    {
+      "go_to": {
+        "return": null,
+        "selector": "body",
+        "dialog_node": "Booking confirm time"
+      },
+      "output": {},
+      "parent": "Booking unknown time",
+      "context": null,
+      "metadata": null,
+      "conditions": "@sys-date",
+      "description": null,
+      "dialog_node": "With supplied date",
+      "previous_sibling": null
+    },
+    {
+      "go_to": {
+        "return": null,
+        "selector": "body",
+        "dialog_node": "Contact Email"
+      },
+      "output": {
+        "text": {
+          "values": [],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Unknown contact type",
+      "context": null,
+      "metadata": null,
+      "conditions": "@contacttype:email",
+      "description": null,
+      "dialog_node": "Unknown - email",
+      "previous_sibling": null
+    },
+    {
+      "go_to": {
+        "return": null,
+        "selector": "body",
+        "dialog_node": "Contact Phone"
+      },
+      "output": {
+        "text": {
+          "values": [],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Unknown contact type",
+      "context": null,
+      "metadata": null,
+      "conditions": "@contacttype:phone",
+      "description": null,
+      "dialog_node": "Unknown - Phone",
+      "previous_sibling": "Unknown - email"
+    },
+    {
+      "go_to": {
+        "return": null,
+        "selector": "body",
+        "dialog_node": "Contact website"
+      },
+      "output": {
+        "text": {
+          "values": [],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Unknown contact type",
+      "context": null,
+      "metadata": null,
+      "conditions": "@contacttype:website",
+      "description": null,
+      "dialog_node": "Unknown - web",
+      "previous_sibling": "Unknown - Phone"
     },
     {
       "go_to": {
@@ -487,7 +731,29 @@
       "description": null,
       "dialog_node": "Unknown map",
       "previous_sibling": null
+    },
+    {
+      "type": "response_condition",
+      "go_to": null,
+      "output": {
+        "text": {
+          "values": [
+            "Hello! Welcome to {{name}}. How can I help you today?",
+            "Hi! I'm here to help. Tell what I can do to help you?",
+            "Hello there. How can I help you?",
+            "Hi. You've reached {{name}}. How can I be of service?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "Welcome",
+      "context": null,
+      "metadata": null,
+      "conditions": null,
+      "description": null,
+      "dialog_node": "node_7_1487339729295",
+      "previous_sibling": null
     }
   ],
-  "counterexamples": []
+   "counterexamples": []
 }

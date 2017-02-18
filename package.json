@@ -4,7 +4,8 @@
   "description": "A Watson powered conversational bot for small businesses",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "node setup.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/ibm-cds-labs/concierge#readme",
   "dependencies": {
+    "prompt": "^1.0.0",
+    "request": "^2.79.0",
     "request-promise": "^4.1.1"
   }
 }
