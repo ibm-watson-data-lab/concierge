@@ -164,10 +164,10 @@ function Concierge(opts) {
 
         var list = $('#_concierge_chat_message_list')
 
-        var name = $("<p>", { class: "_concierge_chat_msg_header " + m.align ? m.align : "left" }).text(m.name)
-        var msg = $("<p>", { class: m.align ? m.align : "left"}).html(m.msg)
+        var name = $("<p>", { class: "_concierge_chat_msg_header" }).text(m.name)
+        var msg = $("<p>").html(m.msg)
 
-        var li = $("<li>")
+        var li = $("<li>", { class: m.align ? m.align : "left" })
         li.append(name);
         li.append(msg);
 

@@ -108,11 +108,11 @@
 	padding: 0;
 }
 
-p.left {
+.left {
   text-align: left;
 }
 
-p.right {
+.right {
   text-align: right;
 }
 
