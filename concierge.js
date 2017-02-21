@@ -170,7 +170,7 @@ const createWhiskActions = function(config) {
     var spawn = child_process.spawnSync;
 
     // create OpenWhisk action
-    var createParams = ['action', 'update', 'concierge', 'action.js', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
+    var createParams = ['action', 'update', 'concierge', 'openwhisk/action.js', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
     var actionCreate = spawn( 'wsk', createParams);
 
     // create POST API call to map to the action
