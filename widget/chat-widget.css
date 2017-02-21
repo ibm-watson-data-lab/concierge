@@ -108,12 +108,12 @@
 	padding: 0;
 }
 
-._concierge_chat_message_list li p.left {
-  text-align: : left;
+p.left {
+  text-align: left;
 }
 
-._concierge_chat_message_list li p.right {
-  text-align: : right;
+p.right {
+  text-align: right;
 }
 
 ._concierge_chat_message_list li p._concierge_chat_msg_header {
