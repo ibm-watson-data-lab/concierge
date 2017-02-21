@@ -119,7 +119,8 @@ function Concierge(opts) {
           
           this.renderChatMessage({
             name: "You",
-            msg: msg
+            msg: msg,
+            align: "left"
           })
 
           var data = {
@@ -146,7 +147,8 @@ function Concierge(opts) {
             res.output.text.forEach(function(t) {
               this.renderChatMessage({
                 name: "Concierge",
-                msg: t
+                msg: t,
+                align: "right"
               })
             }.bind(this))
 
@@ -162,8 +164,8 @@ function Concierge(opts) {
 
         var list = $('#_concierge_chat_message_list')
 
-        var name = $("<p>", { class: "_concierge_chat_msg_header" }).text(m.name)
-        var msg = $("<p>").html(m.msg)
+        var name = $("<p>", { class: "_concierge_chat_msg_header " + m.align ? m.align : "left" }).text(m.name)
+        var msg = $("<p>", { class: m.align ? m.align : "left"}).html(m.msg)
 
         var li = $("<li>")
         li.append(name);
