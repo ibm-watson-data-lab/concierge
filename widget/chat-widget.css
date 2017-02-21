@@ -101,6 +101,7 @@
 
 ._concierge_chat_message_list li {
 	border-bottom: 1px solid #ddd;
+  width: 100%;
 }
 
 ._concierge_chat_message_list li p {
