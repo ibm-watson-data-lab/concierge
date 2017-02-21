@@ -214,34 +214,43 @@ var getTemplateHTML = function(url, workspace_id) {
   return html;
 };
 
+var interactive = function() {
+  // welcome
+  console.log('');
+  console.log('Welcome to the Concierge Demo');
+  console.log('Enter your business details below to get started: ')
+  console.log('');
 
-// welcome
-console.log('Welcome to the Concierge Demo');
-console.log('Enter your business details below to get started: ')
-console.log('');
+  // get the data, make API call, return the workspace_id
+  var config = null;
+  var workspace_id = null;
+  var openwhiskurl = null;
+  generateData().then(function(data) {
+    config = data;
+    console.log('Generating Watson Conversation workspace...')
+    return createWorkspace(config);
+  }).then(function(data) {
+    console.log('Done');
+    console.log('Generating OpenWhisk actions...')
+    workspace_id = data.workspace_id;
+    return createWhiskActions(config);
+  }).then(function(data) {
+    console.log('Done');
+    openwhiskurl = extractURL(data.toString('utf8'))
+    console.log('Paste this HTML into your web page:');
+    console.log();
+    console.log(getTemplateHTML(openwhiskurl, workspace_id));
+    console.log();
+    return process.exit(0);
+  }).catch(function(err) {
+    console.error(err);
+    return process.exit(1);
+  });
+};
 
-// get the data, make API call, return the workspace_id
-var config = null;
-var workspace_id = null;
-var openwhiskurl = null;
-generateData().then(function(data) {
-  config = data;
-  console.log('Generating Watson Conversation workspace...')
-  return createWorkspace(config);
-}).then(function(data) {
-  console.log('Done');
-  console.log('Generating OpenWhisk actions...')
-  workspace_id = data.workspace_id;
-  return createWhiskActions(config);
-}).then(function(data) {
-  console.log('Done');
-  openwhiskurl = extractURL(data.toString('utf8'))
-  console.log('Paste this HTML into your web page:');
-  console.log();
-  console.log(getTemplateHTML(openwhiskurl, workspace_id));
-  console.log();
-  return process.exit(0);
-}).catch(function(err) {
-  console.error(err);
-  return process.exit(1);
-});
+module.exports = {
+  interactive: interactive,
+  createWorkspace: createWorkspace,
+  createWhiskActions: createWhiskActions
+}
+

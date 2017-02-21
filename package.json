@@ -1,17 +1,16 @@
 {
-  "name": "concierge",
+  "name": "concierge-chatbot",
   "version": "1.0.0",
-  "description": "A Watson powered conversational bot for small businesses",
-  "main": "app.js",
+  "description": "A Watson-powered conversational bot for small businesses",
+  "main": "concierge.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "setup": "node setup.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ibm-cds-labs/concierge.git"
   },
-  "author": "",
+  "author": "Glynn Bird <glynn.bird@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ibm-cds-labs/concierge/issues"
@@ -21,5 +20,8 @@
     "prompt": "^1.0.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
+  },
+  "bin": {
+    "concierge-chatbot": "bin/concierge.js"
   }
 }
