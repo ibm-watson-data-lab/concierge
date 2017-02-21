@@ -28,10 +28,11 @@
 	background: #e8f1fa;
 	height: 350px;
 	width: 250px;
-	position: absolute;
+	position: fixed;
 	right: 30px;
 	bottom: 0;
   font-family: "Goudy Bookletter 1911", sans-serif;
+  z-index: 1000;
 }
 
 ._concierge_chat_container._concierge_min {
