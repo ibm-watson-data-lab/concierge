@@ -37,3 +37,9 @@ At the end of the process, the `concierge-chatbot` tool will
 
 It's that simple!
 
+## Storing your conversations
+
+The concierge tool will also prompt you for a Cloudant URL and Cloudant Database name. If they are supplied then the converation will be
+stored in the that database as it happens. This will allow you to perform analytics on your chats. How many people used it? What 
+questions did they ask? What bookings have I collected today?
+

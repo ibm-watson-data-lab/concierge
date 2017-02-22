@@ -55,6 +55,17 @@ const generateData = function() {
         hidden: true,
         default: config.password
       },
+      cloudanturl: {
+        message: 'Cloudant URL',
+        hidden: true,
+        default: config.cloudanturl || '',
+        required: false
+      },
+      cloudantdbname: {
+        message: 'Cloudant Database Name',
+        default: config.cloudantdbname || '',
+        required: false     
+      },
       name: {
         description: 'Business name',
         required: true,
@@ -121,7 +132,7 @@ const generateData = function() {
 };
 
 
-
+// create a Watson conversation workspace, given the business data
 const createWorkspace = function(data) {
   // load the template
   let t = require('./template.json');
@@ -171,6 +182,11 @@ const createWhiskActions = function(config) {
 
     // create OpenWhisk action
     var createParams = ['action', 'update', 'concierge', 'openwhisk/action.js', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
+    if (config.cloudanturl && config.cloudantdbname) {
+      // add Cloudant parameters, if supplied
+      createParams.push('--param', 'url', config.cloudanturl, '--param', 'dbname', config.cloudantdbname);
+    }
+    console.log('wsk', createParams.join(' '));
     var actionCreate = spawn( 'wsk', createParams);
 
     // create POST API call to map to the action
@@ -180,7 +196,8 @@ const createWhiskActions = function(config) {
     var apiCreate2 = spawn( 'wsk', ['api-experimental', 'create', '/concierge', '/message', 'options', '/whisk.system/utils/echo']);
 
     // if there were errors
-    if (actionCreate.err || apiCreate1.err || apiCreate2.err) {
+    if (actionCreate.error || apiCreate1.error || apiCreate2.error) {
+      console.error(actionCreate.error || apiCreate1.error || apiCreate2.error);
       return reject('OpenWhisk actions failed to deploy. Please ensure you have wsk installed and configured.');
     }
     resolve(apiCreate1.stdout);
@@ -214,6 +231,8 @@ var getTemplateHTML = function(url, workspace_id) {
   return html;
 };
 
+
+// collect business data interactively and build the Concierge service
 var interactive = function() {
   // welcome
   console.log('');
@@ -251,6 +270,7 @@ var interactive = function() {
 module.exports = {
   interactive: interactive,
   createWorkspace: createWorkspace,
-  createWhiskActions: createWhiskActions
+  createWhiskActions: createWhiskActions,
+  getTemplateHTML: getTemplateHTML
 }
 

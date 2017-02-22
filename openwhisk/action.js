@@ -34,6 +34,14 @@ var main = function(msg) {
   if (!msg.text) {
     throw new Error('Required parameter "text" missing');
   }
+
+  // optional parameters
+  var cloudant = null;
+  var db = null;
+  if (msg.url && msg.dbname) {
+    cloudant = require('cloudant')({url: msg.url, plugin:'promises'});
+    db = cloudant.db.use(msg.dbname);
+  }
  
   // return a promise
   return new Promise(function(resolve, reject) {
@@ -61,13 +69,23 @@ var main = function(msg) {
     };
 
     // perform the HTTP request
+    var reply = null;
     request(req, function(e, r, b) {
       if (e) {
         return reject(new Error(e));
       }
-      return resolve(b);
+      reply = b;
+      
+      // if we have Cloudant credentials
+      if (db) {
+        // insert data into Cloudant
+        db.insert(b).then(function(data) {
+          return resolve(reply)
+        });
+      } else { 
+        // otherwise just reply with what we have
+        return resolve(reply);
+      }
     });
-
   });
-
 };
