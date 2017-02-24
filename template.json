@@ -331,7 +331,7 @@
           "values": [
             "At what time on @sys-date would you like to come?"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -349,7 +349,7 @@
           "values": [
             "Do you want our email, telephone or website?"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -367,7 +367,7 @@
           "values": [
             "Great! I'll book you in for @sys-time! Please can you give me your phone number to confirm the booking?"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Booking confirm time",
@@ -383,9 +383,11 @@
       "output": {
         "text": {
           "values": [
-            "Our opening hours are {{opening}}"
+            "Our opening hours are {{opening}}",
+            "Here are our opening hours: {{opening}}",
+            "This is when we're open: {{opening}}"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -404,7 +406,7 @@
             "Our address is {{address}}",
             "Our postal address is {{address}}"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -423,7 +425,7 @@
             "Would you like our address, postcode for your sat-nav or to see a map?",
             "Great. We'd love to see you in person. Would you like our postal address, just the postcode for your sat nav or a map?"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -439,8 +441,8 @@
       "output": {
         "text": {
           "values": [
-            "You can find directions to our location here: https://www.google.co.uk/maps/dir//{{postcode}} or put {{postcode}} into your Sat Nav",
-            "We're at {{postcode}}  https://www.google.co.uk/maps/dir//{{postcode}}"
+            "You can find directions to our location here: <a target='_new' href='https://www.google.co.uk/maps/dir//{{postcode}}'>map</a> or put {{postcode}} into your Sat Nav",
+            "We're at {{postcode}}  <a target='_new' href='https://www.google.co.uk/maps/dir//{{postcode}}'>map</a>"
           ],
           "selection_policy": "random"
         }
@@ -462,7 +464,7 @@
             "Thanks! You should get a message on @sys-number when the booking is complete.",
             "That's fantastic! When the booking is confirmed, we'll contact you on @sys-number to let you know."
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Booking and time",
@@ -482,7 +484,7 @@
             "You can email us at <a target='_blank' href='mailto:{{email}}'>{{email}}</a>",
             "You can email your enquiry to <a target='_blank' href='mailto:{{email}}'>{{email}}</a>"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -502,7 +504,7 @@
             "Join our Facebook community at <a target='_blank' href='{{facebook}}'>{{facebook}}</a>",
             "You can find us at <a target='_blank' href='{{facebook}}'>{{facebook}}</a>"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -522,7 +524,7 @@
             "You can call <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>",
             "Please dial <a target='_blank' href='tel:{{phone}}'>{{phone}}</a>"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -542,7 +544,7 @@
             "Visit <a target='_blank' href='{{website}}'>{{website}}",
             "Click <a target='_blank' href='{{website}}'>{{website}}"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -562,7 +564,7 @@
             "Our Tweets are at <a target='_blank' href='https://twitter.com/{{twitter}}'>\\@{{twitter}}</a>",
             "Follow us on Twitter at <a target='_blank' href='https://twitter.com/{{twitter}}'>\\@{{twitter}}</a>"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -583,7 +585,7 @@
             "On what day?",
             "What date is best for you?"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -606,7 +608,7 @@
             "You're very welcome",
             "My pleasure"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": null,
@@ -641,7 +643,7 @@
       "output": {
         "text": {
           "values": [],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Unknown contact type",
@@ -661,7 +663,7 @@
       "output": {
         "text": {
           "values": [],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Unknown contact type",
@@ -681,7 +683,7 @@
       "output": {
         "text": {
           "values": [],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Unknown contact type",
@@ -701,7 +703,7 @@
       "output": {
         "text": {
           "values": [],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Visit unknown",
@@ -721,7 +723,7 @@
       "output": {
         "text": {
           "values": [],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Visit unknown",
@@ -743,7 +745,7 @@
             "Hello there. How can I help you?",
             "Hi. You've reached {{name}}. How can I be of service?"
           ],
-          "selection_policy": "sequential"
+          "selection_policy": "random"
         }
       },
       "parent": "Welcome",

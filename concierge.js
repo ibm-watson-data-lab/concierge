@@ -137,6 +137,13 @@ const createWorkspace = function(data) {
   // load the template
   let t = require('./template.json');
   t.name = `concierge-${data.id}`;
+  
+  // clone
+  data = JSON.parse(JSON.stringify(data));
+
+  if (data.email) {
+    data.email = data.email.replace('@', '\\@')
+  }
 
   // search and replace placeholders with values
   for (let ni in t.dialog_nodes) {
@@ -186,7 +193,6 @@ const createWhiskActions = function(config) {
       // add Cloudant parameters, if supplied
       createParams.push('--param', 'url', config.cloudanturl, '--param', 'dbname', config.cloudantdbname);
     }
-    console.log('wsk', createParams.join(' '));
     var actionCreate = spawn( 'wsk', createParams);
 
     // create POST API call to map to the action
