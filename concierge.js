@@ -206,8 +206,8 @@ const createWhiskActions = function(config) {
       console.error(actionCreate.error || apiCreate1.error || apiCreate2.error);
       return reject('OpenWhisk actions failed to deploy. Please ensure you have wsk installed and configured.');
     }
-    resolve(apiCreate1.stdout);
-
+    var url = extractURL(apiCreate1.stdout.toString('utf8'))
+    resolve(url);
   });
 };
 
@@ -261,7 +261,7 @@ var interactive = function() {
     return createWhiskActions(config);
   }).then(function(data) {
     console.log('Done');
-    openwhiskurl = extractURL(data.toString('utf8'))
+    openwhiskurl = data;
     console.log('Paste this HTML into your web page:');
     console.log();
     console.log(getTemplateHTML(openwhiskurl, workspace_id));
