@@ -242,7 +242,7 @@ var getTemplateHTML = function(url, workspace_id) {
 var interactive = function() {
   // welcome
   console.log('');
-  console.log('Welcome to the Concierge Demo');
+  console.log('Welcome to Watson Concierge Chatbot generator.');
   console.log('Enter your business details below to get started: ')
   console.log('');
 
@@ -252,16 +252,19 @@ var interactive = function() {
   var openwhiskurl = null;
   generateData().then(function(data) {
     config = data;
+    console.log();
     console.log('Generating Watson Conversation workspace...')
     return createWorkspace(config);
   }).then(function(data) {
     console.log('Done');
+    console.log();
     console.log('Generating OpenWhisk actions...')
     workspace_id = data.workspace_id;
     return createWhiskActions(config);
   }).then(function(data) {
     console.log('Done');
     openwhiskurl = data;
+    console.log();
     console.log('Paste this HTML into your web page:');
     console.log();
     console.log(getTemplateHTML(openwhiskurl, workspace_id));

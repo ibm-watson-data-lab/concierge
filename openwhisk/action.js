@@ -79,6 +79,8 @@ var main = function(msg) {
       // if we have Cloudant credentials
       if (db) {
         // insert data into Cloudant
+        b.timestamp = Math.floor((new Date().getTime())/1000);
+        b.workspace = msg.workspace;
         db.insert(b).then(function(data) {
           return resolve(reply)
         });
