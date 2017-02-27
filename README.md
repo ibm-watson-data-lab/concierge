@@ -36,6 +36,8 @@ concierge-chatbot
 
 and answer the questions as prompted.
 
+![terminal](https://github.com/ibm-cds-labs/concierge/raw/master/img/concierge-terminal.png "Terminal")
+
 At the end of the process, the `concierge-chatbot` tool will 
 
 - configure a chatbot in your Watson Conversation service (it may take a minute or so for Watson to learn your configuration)
