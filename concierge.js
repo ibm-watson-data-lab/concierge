@@ -7,6 +7,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
+const colors = require('colors');
 
 // ask for business data, return an object
 const generateData = function() {
@@ -39,7 +40,7 @@ const generateData = function() {
     password: ''
   };
   if (fs.existsSync(configfile)) {
-    console.log('Found previous configuration - using as default values');
+    console.log('Found previous configuration - using as default values'.grey);
     config = require(configfile);
   }
   
@@ -242,8 +243,8 @@ var getTemplateHTML = function(url, workspace_id) {
 var interactive = function() {
   // welcome
   console.log('');
-  console.log('Welcome to Watson Concierge Chatbot generator.');
-  console.log('Enter your business details below to get started: ')
+  console.log('Welcome to Watson Concierge Chatbot generator.'.bold.blue);
+  console.log('Enter your business details below to get started: '.grey)
   console.log('');
 
   // get the data, make API call, return the workspace_id
@@ -253,21 +254,21 @@ var interactive = function() {
   generateData().then(function(data) {
     config = data;
     console.log();
-    console.log('Generating Watson Conversation workspace...')
+    console.log('Generating Watson Conversation workspace...'.grey)
     return createWorkspace(config);
   }).then(function(data) {
-    console.log('Done');
+    console.log('Done'.grey.bold);
     console.log();
-    console.log('Generating OpenWhisk actions...')
+    console.log('Generating OpenWhisk actions...'.grey)
     workspace_id = data.workspace_id;
     return createWhiskActions(config);
   }).then(function(data) {
-    console.log('Done');
+    console.log('Done'.grey.bold);
     openwhiskurl = data;
     console.log();
-    console.log('Paste this HTML into your web page:');
+    console.log('Paste this HTML into your web page:'.grey);
     console.log();
-    console.log(getTemplateHTML(openwhiskurl, workspace_id));
+    console.log(getTemplateHTML(openwhiskurl, workspace_id).white.bold);
     console.log();
     return process.exit(0);
   }).catch(function(err) {

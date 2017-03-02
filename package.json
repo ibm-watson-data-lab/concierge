@@ -1,6 +1,6 @@
 {
   "name": "concierge-chatbot",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "A Watson-powered conversational bot for small businesses",
   "main": "concierge.js",
   "scripts": {
@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ibm-cds-labs/concierge#readme",
   "dependencies": {
+    "colours": "^0.6.0-2",
     "prompt": "^1.0.0",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
