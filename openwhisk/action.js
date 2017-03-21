@@ -74,7 +74,11 @@ var main = function(msg) {
       if (e) {
         return reject(new Error(e));
       }
-      reply = b;
+      reply = {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json' },
+        body: new Buffer(JSON.stringify(b)).toString('base64'),
+      };
       
       // if we have Cloudant credentials
       if (db) {
