@@ -76,7 +76,7 @@ var main = function(msg) {
       }
       reply = {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
         body: new Buffer(JSON.stringify(b)).toString('base64'),
       };
       
