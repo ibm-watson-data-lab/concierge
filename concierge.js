@@ -189,18 +189,24 @@ const createWhiskActions = function(config) {
     var spawn = child_process.spawnSync;
 
     // create OpenWhisk action
-    var packageCreateParams = ['package', 'create', 'concierge', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
+    var packageCreateParams = ['package', 'update', 'concierge', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
     if (config.cloudanturl && config.cloudantdbname) {
       // add Cloudant parameters, if supplied
       packageCreateParams.push('--param', 'url', config.cloudanturl, '--param', 'dbname', config.cloudantdbname);
     }
     var packageCreate = spawn( 'wsk', packageCreateParams);
-    var createParams = ['action', 'update', 'concierge/chat', 'openwhisk/action.js', '-a', 'web-export','true'];
+    var p = path.join(__dirname, 'openwhisk', 'action.js');
+    var createParams = ['action', 'update', 'concierge/chat', p, '-a', 'web-export','true'];
     var actionCreate = spawn( 'wsk', createParams);
 
     // if there were errors
-    if (actionCreate.error || packageCreate.error) {
-      console.error(actionCreate.error || packageCreate.error);
+    if (actionCreate.status || packageCreate.status) {
+      if (packageCreate.stderr) {
+        console.error(packageCreate.stderr.toString('utf8'));
+      }
+      if (actionCreate.stderr) {
+        console.error(actionCreate.stderr.toString('utf8'));
+      }
       return reject('OpenWhisk actions failed to deploy. Please ensure you have wsk installed and configured.');
     }
     resolve(true);
