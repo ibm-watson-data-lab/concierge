@@ -226,7 +226,7 @@ const calculateOpenWhiskNamespace= function() {
     if (bits.length >= 2 && bits[0] === 'namespaces') {
       retval = bits[1];
     }
-    resolve(retval);
+    resolve(retval.trim());
   });
 };
 
