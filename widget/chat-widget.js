@@ -139,7 +139,6 @@ function Concierge(opts) {
             contentType: "application/json; charset=utf-8"
           })
           .done(function(res) {
-            
             if (res.context) {
               this.context = res.context
             }
