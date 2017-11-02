@@ -189,15 +189,15 @@ const createWhiskActions = function(config) {
     var spawn = child_process.spawnSync;
 
     // create OpenWhisk action
-    var packageCreateParams = ['package', 'update', 'concierge', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
+    var packageCreateParams = ['wsk', 'package', 'update', 'concierge', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
     if (config.cloudanturl && config.cloudantdbname) {
       // add Cloudant parameters, if supplied
       packageCreateParams.push('--param', 'url', config.cloudanturl, '--param', 'dbname', config.cloudantdbname);
     }
-    var packageCreate = spawn( 'wsk', packageCreateParams);
+    var packageCreate = spawn('bx', packageCreateParams);
     var p = path.join(__dirname, 'openwhisk', 'action.js');
-    var createParams = ['action', 'update', 'concierge/chat', p, '-a', 'web-export','true'];
-    var actionCreate = spawn( 'wsk', createParams);
+    var createParams = ['wsk', 'action', 'update', 'concierge/chat', p, '-a', 'web-export','true'];
+    var actionCreate = spawn('bx', createParams);
 
     // if there were errors
     if (actionCreate.status || packageCreate.status) {
@@ -219,7 +219,7 @@ const calculateOpenWhiskNamespace= function() {
     // spawn a child process (synchronous)
     var spawn = child_process.spawnSync;
 
-    var ns = spawn( 'wsk', ['namespace', 'list']);
+    var ns = spawn( 'bx', ['wsk', 'namespace', 'list']);
     var str = ns.stdout.toString('utf8');
     var bits = str.split('\n');
     var retval = null;
@@ -232,7 +232,7 @@ const calculateOpenWhiskNamespace= function() {
 
 // get HTML to put into the user's web page
 var getTemplateHTML = function(url, workspace_id) {
-  var html = '<script src="https://ibm-cds-labs.github.io/concierge/widget/chat-widget.js"></script>\n';
+  var html = '<script src="https://ibm-watson-data-lab.github.io/concierge/widget/chat-widget.js"></script>\n';
   html +='<script>\n';
   html +='var Concierge = new Concierge({\n';
   html +='  url:"{{url}}",\n';
