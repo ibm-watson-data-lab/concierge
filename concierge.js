@@ -7,6 +7,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
+const colors = require('colors');
 
 // ask for business data, return an object
 const generateData = function() {
@@ -39,7 +40,7 @@ const generateData = function() {
     password: ''
   };
   if (fs.existsSync(configfile)) {
-    console.log('Found previous configuration - using as default values');
+    console.log('Found previous configuration - using as default values'.grey);
     config = require(configfile);
   }
   
@@ -188,43 +189,50 @@ const createWhiskActions = function(config) {
     var spawn = child_process.spawnSync;
 
     // create OpenWhisk action
-    var createParams = ['action', 'update', 'concierge', 'openwhisk/action.js', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
+    var packageCreateParams = ['wsk', 'package', 'update', 'concierge', '--param', 'CONVERSATION_USERNAME', config.username,'--param', 'CONVERSATION_PASSWORD', config.password];
     if (config.cloudanturl && config.cloudantdbname) {
       // add Cloudant parameters, if supplied
-      createParams.push('--param', 'url', config.cloudanturl, '--param', 'dbname', config.cloudantdbname);
+      packageCreateParams.push('--param', 'url', config.cloudanturl, '--param', 'dbname', config.cloudantdbname);
     }
-    var actionCreate = spawn( 'wsk', createParams);
-
-    // create POST API call to map to the action
-    var apiCreate1 = spawn( 'wsk', ['api-experimental', 'create', '/concierge', '/message', 'post', 'concierge']);
-    
-    // create OPTIONS API call to make it CORS compatible
-    var apiCreate2 = spawn( 'wsk', ['api-experimental', 'create', '/concierge', '/message', 'options', '/whisk.system/utils/echo']);
+    var packageCreate = spawn('bx', packageCreateParams);
+    var p = path.join(__dirname, 'openwhisk', 'action.js');
+    var createParams = ['wsk', 'action', 'update', 'concierge/chat', p, '-a', 'web-export','true'];
+    var actionCreate = spawn('bx', createParams);
 
     // if there were errors
-    if (actionCreate.error || apiCreate1.error || apiCreate2.error) {
-      console.error(actionCreate.error || apiCreate1.error || apiCreate2.error);
+    if (actionCreate.status || packageCreate.status) {
+      if (packageCreate.stderr) {
+        console.error(packageCreate.stderr.toString('utf8'));
+      }
+      if (actionCreate.stderr) {
+        console.error(actionCreate.stderr.toString('utf8'));
+      }
       return reject('OpenWhisk actions failed to deploy. Please ensure you have wsk installed and configured.');
     }
-    var url = extractURL(apiCreate1.stdout.toString('utf8'))
-    resolve(url);
+    resolve(true);
   });
 };
 
-// extract URL from the OpenWhisk command-line reply
-var extractURL = function(str) {
-  var re = new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/, 'g');
-  var matches = str.match(re);
-  if (matches) {
-    return matches[0]
-  } else {
-    return null;
-  }
+const calculateOpenWhiskNamespace= function() {
+  return new Promise(function(resolve, reject) {
+
+    // spawn a child process (synchronous)
+    var spawn = child_process.spawnSync;
+
+    var ns = spawn( 'bx', ['wsk', 'namespace', 'list']);
+    var str = ns.stdout.toString('utf8');
+    var bits = str.split('\n');
+    var retval = null;
+    if (bits.length >= 2 && bits[0] === 'namespaces') {
+      retval = bits[1];
+    }
+    resolve(retval.trim());
+  });
 };
 
 // get HTML to put into the user's web page
 var getTemplateHTML = function(url, workspace_id) {
-  var html = '<script src="https://ibm-cds-labs.github.io/concierge/widget/chat-widget.js"></script>\n';
+  var html = '<script src="https://ibm-watson-data-lab.github.io/concierge/widget/chat-widget.js"></script>\n';
   html +='<script>\n';
   html +='var Concierge = new Concierge({\n';
   html +='  url:"{{url}}",\n';
@@ -237,37 +245,40 @@ var getTemplateHTML = function(url, workspace_id) {
   return html;
 };
 
-
 // collect business data interactively and build the Concierge service
 var interactive = function() {
   // welcome
   console.log('');
-  console.log('Welcome to Watson Concierge Chatbot generator.');
-  console.log('Enter your business details below to get started: ')
+  console.log('Welcome to Watson Concierge Chatbot generator.'.bold.blue);
+  console.log('Enter your business details below to get started: '.grey)
   console.log('');
 
   // get the data, make API call, return the workspace_id
   var config = null;
   var workspace_id = null;
   var openwhiskurl = null;
+  var namespace = null;
   generateData().then(function(data) {
     config = data;
     console.log();
-    console.log('Generating Watson Conversation workspace...')
+    console.log('Generating Watson Conversation workspace...'.grey)
     return createWorkspace(config);
   }).then(function(data) {
-    console.log('Done');
+    console.log('Done'.grey.bold);
     console.log();
-    console.log('Generating OpenWhisk actions...')
+    console.log('Generating OpenWhisk actions...'.grey)
     workspace_id = data.workspace_id;
+    return calculateOpenWhiskNamespace();
+  }).then(function(ns) {
+    namespace = ns;
     return createWhiskActions(config);
   }).then(function(data) {
-    console.log('Done');
-    openwhiskurl = data;
+    console.log('Done'.grey.bold);
+    openwhiskurl = 'https://openwhisk.ng.bluemix.net/api/v1/web/' + namespace + '/' + 'concierge/chat';
     console.log();
-    console.log('Paste this HTML into your web page:');
+    console.log('Paste this HTML into your web page:'.grey);
     console.log();
-    console.log(getTemplateHTML(openwhiskurl, workspace_id));
+    console.log(getTemplateHTML(openwhiskurl, workspace_id).white.bold);
     console.log();
     return process.exit(0);
   }).catch(function(err) {

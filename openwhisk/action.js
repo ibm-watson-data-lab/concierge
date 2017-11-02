@@ -59,7 +59,7 @@ var main = function(msg) {
     // create a request object
     var req = {
       method: 'post',
-      url: 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' + msg.workspace + '/message?version=2016-09-20',
+      url: 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' + msg.workspace + '/message?version=2017-05-26',
       json: true,
       body: body,
       auth: {
@@ -74,7 +74,11 @@ var main = function(msg) {
       if (e) {
         return reject(new Error(e));
       }
-      reply = b;
+      reply = {
+        statusCode: 200,
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        body: new Buffer(JSON.stringify(b)).toString('base64'),
+      };
       
       // if we have Cloudant credentials
       if (db) {
